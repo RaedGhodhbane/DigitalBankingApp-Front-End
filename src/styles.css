@@ -1,1 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
+/* Pour afficher les icones à travers la bibliothèque bootstrap qui est déjà installée dans ngModule,
+on doit importer bootstrap-icons */
+@import "~bootstrap-icons/font/bootstrap-icons.css"

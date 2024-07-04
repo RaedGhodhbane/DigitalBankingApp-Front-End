@@ -1,0 +1,64 @@
+<div class="container mt-2">
+  <!-- s'il y a des données on les affiches (success) si non echec failure ou loading
+  en tous cas trois scénarios sont possible succès : affichage des données/ loading chargement des données / echec-->
+  <ng-container *ngIf="customers | async as listCustomers; else failureOrlaoding">
+    <div class="card">
+      <div class="card-header"> Customers list </div>
+      <div class="card-body">
+        <!-- si searchFormGroup retourne une valeur -->
+        <div *ngIf="searchFormGroup">
+          <!-- Création du formulaire de recherche -->
+          <div>
+            <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+              <div class="input-group">
+                <label class="input-group-text">Keyword : </label>
+                <input type="text" formControlName="keyword" class="form-control">
+                <button class="btn btn-info">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let c of customers | async">
+            <td> {{c.id}}</td>
+            <td> {{c.name}}</td>
+            <td> {{c.email}}</td>
+            <td>
+              <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-success">
+                <i class="bi bi-pen"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-container>
+  <!--ng-template est un élément angular on ne met pas une class
+  il faut créer un div dans la quelle vous injecter le data binding
+  relatif au msg d'erreur
+  -->
+  <ng-template #failureOrlaoding>
+    <ng-container *ngIf="errorMessage; else loading">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #loading>
+      loading .....
+    </ng-template>
+  </ng-template>
+</div>
